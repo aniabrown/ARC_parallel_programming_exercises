@@ -18,8 +18,15 @@ LIB        = -lm
 # includes
 INCS =
 
-default:	integral_mpi.c
+default: 	all
+
+all: 		integral_serial integral_mpi
+
+integral_serial:	integral.c
+		$(CC) $(INCS) $(CFLAGS) -o integral integral.c $(LIB) 
+
+integral_mpi:	integral_mpi.c
 		$(MPI_CC) $(INCS) $(CFLAGS) -o integral_mpi integral_mpi.c $(LIB) 
 
 clean:
-		/bin/rm -f *.o *.c~ *.h~ makefile~ integral_mpi
+		/bin/rm -f *.o *.c~ *.h~ makefile~ integral_serial integral_mpi
