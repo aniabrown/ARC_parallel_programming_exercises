@@ -92,14 +92,14 @@ int main(void) {
 
 
   //
-  // ----- read input
+  // ----- input
   //
-  printf ("Where should the integration start?\n");
-  scanf  ("%lf", &a );
-  printf ("And where should the integration end?\n");
-  scanf  ("%lf", &b );
-  printf ("And how many intervals should the area be divided into?\n");
-  scanf  ("%d",  &N );
+  // Where should the integration start?
+  a = -1;
+  // Where should the integration end?
+  b = 1;
+  // How many intervals should the area be divided into?
+  N = 1000;
 
 
   //

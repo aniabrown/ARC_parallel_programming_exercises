@@ -117,23 +117,14 @@ int main (int narg, char** varg) {
 
 
   //
-  // ----- read the input
+  // ----- input
   //
-  // read the input data
-  if (iproc == 0) {
-    printf ("Where should the integration start?\n");
-    scanf  ("%lf", &a );
-    printf ("And where should the integration end?\n");
-    scanf  ("%lf", &b );
-    printf ("And how many intervals should the area be divided into?\n");
-    scanf  ("%d",  &N );
-  }
-
-  // broadcast the data to the other processes
-  MPI_Bcast(&a, 1, MPI_DOUBLE,  0, MPI_COMM_WORLD);
-  MPI_Bcast(&b, 1, MPI_DOUBLE,  0, MPI_COMM_WORLD);
-  MPI_Bcast(&N, 1, MPI_INTEGER, 0, MPI_COMM_WORLD);
-
+  // Where should the integration start?
+  a = -1;
+  // Where should the integration end?
+  b = 1;
+  // How many intervals should the area be divided into?
+  N = 1000;
 
   // start time
   time_start = MPI_Wtime ( );
