@@ -99,7 +99,7 @@ int main(void) {
   // Where should the integration end?
   b = 1;
   // How many intervals should the area be divided into?
-  N = 1000;
+  N = 100000;
 
 
   //

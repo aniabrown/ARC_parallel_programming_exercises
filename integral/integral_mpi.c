@@ -120,11 +120,17 @@ int main (int narg, char** varg) {
   // ----- input
   //
   // Where should the integration start?
-  a = -1;
+  a = -1.0;
   // Where should the integration end?
-  b = 1;
+  b = 1.0;
   // How many intervals should the area be divided into?
-  N = 1000;
+  N = 100000;
+
+  if (iproc==0){
+	printf("Calculating integral from %f to %f using %d trapeziums.\n", a, b, iproc);
+	printf("Using %d processes.\n", nproc);
+  }
+
 
   // start time
   time_start = MPI_Wtime ( );
