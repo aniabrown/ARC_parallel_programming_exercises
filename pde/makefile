@@ -19,22 +19,18 @@ LIBS = -lm
 
 # rules
 default:	all
-all:    	heat heat_mpi heat_omp
+all:    	heat_serial heat_mpi
 
-heat:		heat.o
-		$(CC) $(CFLAGS) -o heat heat.o $(LIBS)
+heat_serial:	heat_serial.o
+		$(CC) $(CFLAGS) -o heat_serial heat_serial.o $(LIBS)
 heat_mpi:	heat_mpi.o
 		$(MPI_CC) $(CFLAGS) -o heat_mpi heat_mpi.o $(LIBS)
-heat_omp:	heat_omp.o
-		$(CC) $(CFLAGS) $(CFLAGS_OMP) -o heat_omp heat_omp.o $(LIBS)
 
 
-heat.o:		heat.c
-		$(CC) $(CFLAGS) -c heat.c
+heat_serial.o:	heat_serial.c
+		$(CC) $(CFLAGS) -c heat_serial.c
 heat_mpi.o:	heat_mpi.c
 		$(MPI_CC) $(CFLAGS) -c heat_mpi.c
-heat_omp.o:	heat_omp.c
-		$(CC) $(CFLAGS) $(CFLAGS_OMP) -c heat_omp.c
 
 clean:
-		/bin/rm -f *.o *.c~ *.h~ makefile~ heat heat_mpi heat_omp
+		/bin/rm -f *.o *.c~ *.h~ makefile~ heat_serial heat_mpi

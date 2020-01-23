@@ -18,7 +18,7 @@ int main( void ) {
 
   double nu;
   double *u, *uo;
-  double du, du_global;
+  double du;
   double rms, rms_global;
 
   /* For timing */
