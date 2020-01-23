@@ -100,7 +100,9 @@ int main (int narg, char** varg) {
   double a,b,v;                  // global:  ends of interval, integral value
 
   // timing variables
-  double time_start, time_end;
+  double time_start, time_end, time_avg, time_standard_dev;
+  const int num_trials=100;
+  double trial_times[num_trials];
 
 
   //
@@ -126,28 +128,47 @@ int main (int narg, char** varg) {
   // How many intervals should the area be divided into?
   N = 100000;
 
+
   if (iproc==0){
-	printf("Calculating integral from %f to %f using %d trapeziums.\n", a, b, iproc);
+	printf("Calculating integral from %.2f to %.2f using %d trapeziums.\n", a, b, N);
 	printf("Using %d processes.\n", nproc);
   }
 
 
-  // start time
-  time_start = MPI_Wtime ( );
 
-  // evaluate the integral
-  v = trapInt_MPI (a, b, N);
+  for (int t=0; t<num_trials; t++){
+    // start time
+    time_start = MPI_Wtime ( );
 
-  // end time
-  time_end = MPI_Wtime ( );
+    // evaluate the integral
+    v = trapInt_MPI (a, b, N);
+
+    // end time
+    time_end = MPI_Wtime ( );
+    trial_times[t] = time_end - time_start;
+  }
+
 
 
   //
   // ----- print sum
   //
   if (iproc == 0) {
-    printf(" process time      = %e s\n", time_end - time_start);
-    printf(" value of integral = %e\n", v);
+    // calculate timing stats
+    double total_time=0;
+    for (int t=0; t<num_trials; t++){
+      total_time += trial_times[t];
+    }
+    time_avg = total_time/num_trials;
+    total_time=0;
+    for (int t=0; t<num_trials; t++){
+      total_time += (trial_times[t]-time_avg)*(trial_times[t]-time_avg);
+    }
+    time_standard_dev = sqrt(total_time/num_trials);
+    
+    printf("Results:\n");
+    printf(" Average process time is %fs with standard deviation %f over %d trials\n", time_avg, time_standard_dev, num_trials);
+    printf(" Value of integral = %f\n", v);
   }
 
 

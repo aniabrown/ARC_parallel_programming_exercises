@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # job configuration
-#PBS -N integral
-#PBS -l select=1:ncpus=72
+#PBS -N pde
+#PBS -l select=1:ncpus=2
 #PBS -l walltime=00:00:30
 
 # Change to the directory that the job was submitted from
@@ -12,6 +12,6 @@ cd $PBS_O_WORKDIR
 module load mpt
 module load intel-compilers-17
 
-mpiexec_mpt -ppn 36 -n 72 ./integral_mpi
+mpiexec_mpt -ppn 2 -n 2 ./heat_mpi
 
 
